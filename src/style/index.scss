@@ -1,0 +1,34 @@
+:root {
+  --white: hsl(0, 0%, 100%);
+  --blue-grey: hsl(210, 28%, 85%);
+  --grey: hsl(0, 0%, 96%);
+  --black: hsl(0, 0%, 20%);
+}
+html,
+body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+html {
+  box-sizing: border-box;
+  font-size: 16px;
+}
+body {
+  background: var(--white);
+  color: var(--black);
+  display: flex;
+  justify-content: center;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+html,
+body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
