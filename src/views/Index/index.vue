@@ -1,6 +1,7 @@
 <template>
   <div>
     <p class="text-center">选择的日期: {{ formattedDate }}</p>
+    <!-- <p class="text-center">选择的日期: {{ curr }}</p> -->
     <calendar v-model="curr" />
   </div>
 </template>

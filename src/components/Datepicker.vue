@@ -32,7 +32,7 @@ export default {
       dayLabels: null
     }
   },
-  created() {
+  created () {
     this.dayLabels = ['日', '一', '二', '三', '四', '五', '六']
     this.today = new Date()
     this.selectedDate = this.today
@@ -41,36 +41,34 @@ export default {
   props: {
     startDate: {
       required: false,
-      type: Date,
+      type: Date
     }
   },
   computed: {
-    currentMonth() {
+    currentMonth () {
       return this.currDateCursor.getMonth()
     },
-    currentYear() {
+    currentYear () {
       return this.currDateCursor.getFullYear()
     },
-    currentMonthLabel() {
+    currentMonthLabel () {
       const MONTH_LABELS = [
-        "January", "February", "March",
-        "April", "May", "June",
-        "July", "August", "September",
-        "October", "November", "December"]
+        'January', 'February', 'March',
+        'April', 'May', 'June',
+        'July', 'August', 'September',
+        'October', 'November', 'December']
       return MONTH_LABELS[this.currentMonth]
     },
-    daysArray() {
+    daysArray () {
       const date = this.currDateCursor
       const startOfMonth = dateFns.startOfMonth(date) // 获得月份第一天
       const endOfMonth = dateFns.endOfMonth(date) // 获得月份最后一天
-      //const days = dateFns.eachDay(startOfMonth, endOfMonth);
-      
       const days = dateFns.eachDay(startOfMonth, endOfMonth).map((day) => ({
         date: day,
-        isCurrentMonth:  dateFns.isSameMonth(new Date(this.currentYear, this.currentMonth), day),
+        isCurrentMonth: dateFns.isSameMonth(new Date(this.currentYear, this.currentMonth), day),
         isToday: dateFns.isToday(day),
         isSelected: dateFns.isSameDay(this.selectedDate, day)
-      }));
+      }))
 
       // gen the days from last month
       let previousMonthCursor = dateFns.lastDayOfMonth(dateFns.addMonths(date, -1))
@@ -84,10 +82,10 @@ export default {
         })
         previousMonthCursor = dateFns.addDays(previousMonthCursor, -1)
       }
-      
+
       // gen days for next month
       // 在加上上个月的日期的基础上再days.length % 7取模
-      const daysNeededAtEnd = (days.length % 7 > 0) ? (7 -(days.length % 7)) : 0
+      const daysNeededAtEnd = (days.length % 7 > 0) ? (7 - (days.length % 7)) : 0
       let nextMonthCursor = dateFns.addMonths(date, 1)
       nextMonthCursor = dateFns.setDate(nextMonthCursor, 1)
       for (let x = 1; x <= daysNeededAtEnd; x++) {
@@ -102,27 +100,35 @@ export default {
       return days
     }
   },
-  mounted() {
+  mounted () {
     if (this.startDate) {
       this.currDateCursor = this.startDate
       this.selectedDate = this.startDate
     }
   },
   methods: {
-    dayClassObj(day) {
+    dayClassObj (day) {
       return {
-        'today' : day.isToday,
+        'today': day.isToday,
         'current': day.isCurrentMonth,
-        'selected': day.isSelected,
-      };
+        'selected': day.isSelected
+      }
     },
-    nextMonth() {
+    nextMonth () {
       this.currDateCursor = dateFns.addMonths(this.currDateCursor, 1)
+      let startOfMonth = dateFns.format(dateFns.startOfMonth(this.currDateCursor), 'YYYY-MM-DD')
+      let endOfMonth = dateFns.format(dateFns.endOfMonth(this.currDateCursor), 'YYYY-MM-DD')
+      console.log([startOfMonth, endOfMonth])
+      // this.$emit('changeMonth', this.currDateCursor)
     },
-    previousMonth() {
+    previousMonth () {
       this.currDateCursor = dateFns.addMonths(this.currDateCursor, -1)
+      let startOfMonth = dateFns.format(dateFns.startOfMonth(this.currDateCursor), 'YYYY-MM-DD')
+      let endOfMonth = dateFns.format(dateFns.endOfMonth(this.currDateCursor), 'YYYY-MM-DD')
+      console.log([startOfMonth, endOfMonth])
+      // this.$emit('changeMonth', this.currDateCursor)
     },
-    setSelectedDate(day) {
+    setSelectedDate (day) {
       this.selectedDate = day.date
       this.currDateCursor = day.date
       this.$emit('input', this.selectedDate)
@@ -136,31 +142,31 @@ export default {
       let month = ''
       switch (val) {
         case 'January':
-          month = '1'
+          month = '01'
           break
         case 'February':
-          month = '2'
+          month = '02'
           break
         case 'March':
-          month = '3'
+          month = '03'
           break
         case 'April':
-          month = '4'
+          month = '04'
           break
         case 'May':
-          month = '5'
+          month = '05'
           break
         case 'June':
-          month = '6'
+          month = '06'
           break
         case 'July':
-          month = '7'
+          month = '07'
           break
         case 'August':
-          month = '8'
+          month = '08'
           break
         case 'September':
-          month = '9'
+          month = '09'
           break
         case 'October':
           month = '10'
@@ -179,85 +185,79 @@ export default {
 </script>
 
 <style scoped lang=scss>
-.calendar {
-  margin: 0 auto;
-  border: 1px solid var(--blue-grey);
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  width: 322px;
+  .calendar {
+    margin: 0 auto;
+    border: 1px solid var(--blue-grey);
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    width: 322px;
 
-  > .header {
-    padding: .75rem;
-    font-size: 1.25rem;
-    grid-column: 1 / span 7;
-    
-    >span {
-      flex: 1;
-      text-align: center;
-    }
-    
-    button {
-      border: none;
-      background: var(--white);
-      margin: 0 1rem;
-      padding: .25rem .5rem;
-      
-      &:hover {
-        background: var(--grey);
-        transition: background 150ms;
+    > .header {
+      padding: .75rem;
+      font-size: 1.25rem;
+      grid-column: 1 / span 7;
+
+      >span {
+        flex: 1;
+        text-align: center;
+      }
+
+      button {
+        border: none;
+        background: var(--white);
+        margin: 0 1rem;
+        padding: .25rem .5rem;
+
+        &:hover {
+          background: var(--grey);
+          transition: background 150ms;
+        }
       }
     }
-  }
 
-  > * {
-    align-items: center;
-    display: flex;
-    justify-content: center;
-  }
-
-  > .day {
-    color: var(--blue-grey);
-    width: 30px;
-    height: 30px;
-    font-size: 12px;
-    margin: 5px;
-    &.selected {
-      border: 1px solid var(--blue-grey);
-      background-color: #409eff;
-    }
-    &.current {
-      color: var(--black);
-    }
-    &::before {
-      content: "";
-      display: inline-block;
-      height: 0;
-      padding-bottom: 100%;
-      width: 1px;
+    > * {
+      align-items: center;
+      display: flex;
+      justify-content: center;
     }
 
-    button {
-      color: inherit;
-      background: transparent;
-      border: none;
-      height: 100%;
-      width: 100%;
-      outline: none;
-      /* &:hover {
-        background: var(--grey);
-        transition: background 150ms;
-      } */
+    > .day {
+      color: var(--blue-grey);
+      width: 30px;
+      height: 30px;
+      font-size: 12px;
+      margin: 5px;
+      &.selected {
+        border: 1px solid var(--blue-grey);
+        background-color: #409eff;
+      }
+      &.current {
+        color: var(--black);
+      }
+      &::before {
+        content: "";
+        display: inline-block;
+        height: 0;
+        padding-bottom: 100%;
+        width: 1px;
+      }
+
+      button {
+        color: inherit;
+        background: transparent;
+        border: none;
+        height: 100%;
+        width: 100%;
+        outline: none;
+      }
+    }
+
+    > .today {
+      background: var(--grey);
+      border-radius: 2px;
     }
   }
-
-  > .today {
-    background: var(--grey);
-    border-radius: 2px;
+  .text-center {
+    text-align: center;
   }
-}
-.text-center {
-  text-align: center;
-}
 </style>
-
-
