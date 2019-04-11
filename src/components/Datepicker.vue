@@ -1,9 +1,9 @@
 <template id="calendar">
   <div class="calendar">
     <header class="header">
-      <button @click="previousMonth">&lt;&lt;</button>
+      <button type="button" @click="previousMonth(event)">&lt;&lt;</button>
       <span>{{ currentYear }} 年 {{ currentMonthLabel | filterMonth }} 月</span>
-      <button @click="nextMonth">&gt;&gt;</button>
+      <button type="button" @click="nextMonth(event)">&gt;&gt;</button>
     </header>
     <div class="headings" v-for="(dayLabel, index) in dayLabels" :key="index">
       {{ dayLabel }}
@@ -116,16 +116,16 @@ export default {
     },
     nextMonth () {
       this.currDateCursor = dateFns.addMonths(this.currDateCursor, 1)
-      let startOfMonth = dateFns.format(dateFns.startOfMonth(this.currDateCursor), 'YYYY-MM-DD')
-      let endOfMonth = dateFns.format(dateFns.endOfMonth(this.currDateCursor), 'YYYY-MM-DD')
-      console.log([startOfMonth, endOfMonth])
+      // let startOfMonth = dateFns.format(dateFns.startOfMonth(this.currDateCursor), 'YYYY-MM-DD')
+      // let endOfMonth = dateFns.format(dateFns.endOfMonth(this.currDateCursor), 'YYYY-MM-DD')
+      // console.log([startOfMonth, endOfMonth])
       // this.$emit('changeMonth', this.currDateCursor)
     },
     previousMonth () {
       this.currDateCursor = dateFns.addMonths(this.currDateCursor, -1)
-      let startOfMonth = dateFns.format(dateFns.startOfMonth(this.currDateCursor), 'YYYY-MM-DD')
-      let endOfMonth = dateFns.format(dateFns.endOfMonth(this.currDateCursor), 'YYYY-MM-DD')
-      console.log([startOfMonth, endOfMonth])
+      // let startOfMonth = dateFns.format(dateFns.startOfMonth(this.currDateCursor), 'YYYY-MM-DD')
+      // let endOfMonth = dateFns.format(dateFns.endOfMonth(this.currDateCursor), 'YYYY-MM-DD')
+      // console.log([startOfMonth, endOfMonth])
       // this.$emit('changeMonth', this.currDateCursor)
     },
     setSelectedDate (day) {
